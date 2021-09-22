@@ -1,0 +1,19 @@
+#
+# This file contains extra pkgconfig build requirements that don't get picked up but are 
+# desirable. One name per line, no whitespace.
+#
+e2fsprogs-dev
+glib-networking
+gobject-introspection-dev
+gobject-introspection
+glib-networking-lib32
+curl-dev32
+e2fsprogs-dev32
+vala
+vala-dev
+libxml2-dev32
+libxml2-dev
+sqlite-autoconf-dev32
+libpsl-dev32
+zlib-dev32
+zlib-dev

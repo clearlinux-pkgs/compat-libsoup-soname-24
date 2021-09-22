@@ -1,0 +1,3 @@
+--wrap-mode=nodownload
+-Dgssapi=disabled
+-Dinstalled_tests=true
