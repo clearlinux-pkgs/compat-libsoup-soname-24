@@ -4,12 +4,13 @@
 #
 Name     : compat-libsoup-soname-24
 Version  : 2.74.0
-Release  : 48
+Release  : 49
 URL      : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Source0  : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : LGPL-2.0
+Requires: compat-libsoup-soname-24-data = %{version}-%{release}
 Requires: compat-libsoup-soname-24-lib = %{version}-%{release}
 Requires: compat-libsoup-soname-24-license = %{version}-%{release}
 Requires: compat-libsoup-soname-24-locales = %{version}-%{release}
@@ -40,9 +41,30 @@ BuildRequires : zlib-dev32
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
 and the glib main loop, to integrate well with GNOME applications.
 
+%package data
+Summary: data components for the compat-libsoup-soname-24 package.
+Group: Data
+
+%description data
+data components for the compat-libsoup-soname-24 package.
+
+
+%package dev
+Summary: dev components for the compat-libsoup-soname-24 package.
+Group: Development
+Requires: compat-libsoup-soname-24-lib = %{version}-%{release}
+Requires: compat-libsoup-soname-24-data = %{version}-%{release}
+Provides: compat-libsoup-soname-24-devel = %{version}-%{release}
+Requires: compat-libsoup-soname-24 = %{version}-%{release}
+
+%description dev
+dev components for the compat-libsoup-soname-24 package.
+
+
 %package lib
 Summary: lib components for the compat-libsoup-soname-24 package.
 Group: Libraries
+Requires: compat-libsoup-soname-24-data = %{version}-%{release}
 Requires: compat-libsoup-soname-24-license = %{version}-%{release}
 
 %description lib
@@ -65,6 +87,16 @@ Group: Default
 locales components for the compat-libsoup-soname-24 package.
 
 
+%package tests
+Summary: tests components for the compat-libsoup-soname-24 package.
+Group: Default
+Requires: compat-libsoup-soname-24 = %{version}-%{release}
+Requires: curl
+
+%description tests
+tests components for the compat-libsoup-soname-24 package.
+
+
 %prep
 %setup -q -n libsoup-2.74.0
 cd %{_builddir}/libsoup-2.74.0
@@ -74,7 +106,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1632332680
+export SOURCE_DATE_EPOCH=1632334731
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -93,150 +125,86 @@ mkdir -p %{buildroot}/usr/share/package-licenses/compat-libsoup-soname-24
 cp %{_builddir}/libsoup-2.74.0/COPYING %{buildroot}/usr/share/package-licenses/compat-libsoup-soname-24/ba8966e2473a9969bdcab3dc82274c817cfd98a1
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang libsoup
-## Remove excluded files
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-address.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-auth-domain-basic.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-auth-domain-digest.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-auth-domain.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-auth-manager.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-auth.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-autocleanups.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-cache.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-content-decoder.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-content-sniffer.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-cookie-jar-db.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-cookie-jar-text.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-cookie-jar.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-cookie.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-date.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-enum-types.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-form.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-headers.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-hsts-enforcer-db.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-hsts-enforcer.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-hsts-policy.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-logger.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-message-body.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-message-headers.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-message.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-method.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-misc.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-multipart-input-stream.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-multipart.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-password-manager.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-portability.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-proxy-resolver-default.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-proxy-resolver.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-proxy-uri-resolver.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-request-data.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-request-file.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-request-http.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-request.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-requester.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-server.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-session-async.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-session-feature.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-session-sync.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-session.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-socket.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-status.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-tld.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-types.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-uri.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-value-utils.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-version.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-websocket-connection.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-websocket-extension-deflate.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-websocket-extension-manager.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-websocket-extension.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-websocket.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-xmlrpc-old.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup-xmlrpc.h
-rm -f %{buildroot}/usr/include/libsoup-2.4/libsoup/soup.h
-rm -f %{buildroot}/usr/include/libsoup-gnome-2.4/libsoup/soup-cookie-jar-sqlite.h
-rm -f %{buildroot}/usr/include/libsoup-gnome-2.4/libsoup/soup-gnome-features.h
-rm -f %{buildroot}/usr/include/libsoup-gnome-2.4/libsoup/soup-gnome.h
-rm -f %{buildroot}/usr/lib64/girepository-1.0/Soup-2.4.typelib
-rm -f %{buildroot}/usr/lib64/girepository-1.0/SoupGNOME-2.4.typelib
-rm -f %{buildroot}/usr/lib64/libsoup-2.4.so
-rm -f %{buildroot}/usr/lib64/libsoup-gnome-2.4.so
-rm -f %{buildroot}/usr/lib64/pkgconfig/libsoup-2.4.pc
-rm -f %{buildroot}/usr/lib64/pkgconfig/libsoup-gnome-2.4.pc
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/cache-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/chunk-io-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/chunk-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/coding-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/context-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/continue-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/cookies-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/date-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/forms-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/header-parsing-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/hsts-db-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/hsts-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/index.txt
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/libtest-utils.so
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/misc-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/multipart-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/no-ssl-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/ntlm-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/ntlm-test-helper
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/redirect-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/requester-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/resource-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/samesite-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/server-auth-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/server-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/session-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/sniffing-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/socket-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/soup-tests.gresource
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/ssl-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/streaming-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/test-cert.pem
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/test-key.pem
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/timeout-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/tld-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/uri-parsing-test
-rm -f %{buildroot}/usr/libexec/installed-tests/libsoup-2.4/websocket-test
-rm -f %{buildroot}/usr/share/gir-1.0/Soup-2.4.gir
-rm -f %{buildroot}/usr/share/gir-1.0/SoupGNOME-2.4.gir
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/cache-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/chunk-io-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/chunk-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/coding-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/context-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/continue-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/cookies-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/date-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/forms-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/header-parsing-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/hsts-db-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/hsts-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/misc-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/multipart-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/no-ssl-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/ntlm-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/redirect-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/requester-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/resource-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/samesite-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/server-auth-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/server-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/session-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/sniffing-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/socket-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/ssl-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/streaming-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/timeout-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/tld-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/uri-parsing-test.test
-rm -f %{buildroot}/usr/share/installed-tests/libsoup-2.4/websocket-test.test
-rm -f %{buildroot}/usr/share/vala/vapi/libsoup-2.4.deps
-rm -f %{buildroot}/usr/share/vala/vapi/libsoup-2.4.vapi
 
 %files
 %defattr(-,root,root,-)
+
+%files data
+%defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/Soup-2.4.typelib
+/usr/lib64/girepository-1.0/SoupGNOME-2.4.typelib
+/usr/share/gir-1.0/*.gir
+/usr/share/vala/vapi/libsoup-2.4.deps
+/usr/share/vala/vapi/libsoup-2.4.vapi
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/libsoup-2.4/libsoup/soup-address.h
+/usr/include/libsoup-2.4/libsoup/soup-auth-domain-basic.h
+/usr/include/libsoup-2.4/libsoup/soup-auth-domain-digest.h
+/usr/include/libsoup-2.4/libsoup/soup-auth-domain.h
+/usr/include/libsoup-2.4/libsoup/soup-auth-manager.h
+/usr/include/libsoup-2.4/libsoup/soup-auth.h
+/usr/include/libsoup-2.4/libsoup/soup-autocleanups.h
+/usr/include/libsoup-2.4/libsoup/soup-cache.h
+/usr/include/libsoup-2.4/libsoup/soup-content-decoder.h
+/usr/include/libsoup-2.4/libsoup/soup-content-sniffer.h
+/usr/include/libsoup-2.4/libsoup/soup-cookie-jar-db.h
+/usr/include/libsoup-2.4/libsoup/soup-cookie-jar-text.h
+/usr/include/libsoup-2.4/libsoup/soup-cookie-jar.h
+/usr/include/libsoup-2.4/libsoup/soup-cookie.h
+/usr/include/libsoup-2.4/libsoup/soup-date.h
+/usr/include/libsoup-2.4/libsoup/soup-enum-types.h
+/usr/include/libsoup-2.4/libsoup/soup-form.h
+/usr/include/libsoup-2.4/libsoup/soup-headers.h
+/usr/include/libsoup-2.4/libsoup/soup-hsts-enforcer-db.h
+/usr/include/libsoup-2.4/libsoup/soup-hsts-enforcer.h
+/usr/include/libsoup-2.4/libsoup/soup-hsts-policy.h
+/usr/include/libsoup-2.4/libsoup/soup-logger.h
+/usr/include/libsoup-2.4/libsoup/soup-message-body.h
+/usr/include/libsoup-2.4/libsoup/soup-message-headers.h
+/usr/include/libsoup-2.4/libsoup/soup-message.h
+/usr/include/libsoup-2.4/libsoup/soup-method.h
+/usr/include/libsoup-2.4/libsoup/soup-misc.h
+/usr/include/libsoup-2.4/libsoup/soup-multipart-input-stream.h
+/usr/include/libsoup-2.4/libsoup/soup-multipart.h
+/usr/include/libsoup-2.4/libsoup/soup-password-manager.h
+/usr/include/libsoup-2.4/libsoup/soup-portability.h
+/usr/include/libsoup-2.4/libsoup/soup-proxy-resolver-default.h
+/usr/include/libsoup-2.4/libsoup/soup-proxy-resolver.h
+/usr/include/libsoup-2.4/libsoup/soup-proxy-uri-resolver.h
+/usr/include/libsoup-2.4/libsoup/soup-request-data.h
+/usr/include/libsoup-2.4/libsoup/soup-request-file.h
+/usr/include/libsoup-2.4/libsoup/soup-request-http.h
+/usr/include/libsoup-2.4/libsoup/soup-request.h
+/usr/include/libsoup-2.4/libsoup/soup-requester.h
+/usr/include/libsoup-2.4/libsoup/soup-server.h
+/usr/include/libsoup-2.4/libsoup/soup-session-async.h
+/usr/include/libsoup-2.4/libsoup/soup-session-feature.h
+/usr/include/libsoup-2.4/libsoup/soup-session-sync.h
+/usr/include/libsoup-2.4/libsoup/soup-session.h
+/usr/include/libsoup-2.4/libsoup/soup-socket.h
+/usr/include/libsoup-2.4/libsoup/soup-status.h
+/usr/include/libsoup-2.4/libsoup/soup-tld.h
+/usr/include/libsoup-2.4/libsoup/soup-types.h
+/usr/include/libsoup-2.4/libsoup/soup-uri.h
+/usr/include/libsoup-2.4/libsoup/soup-value-utils.h
+/usr/include/libsoup-2.4/libsoup/soup-version.h
+/usr/include/libsoup-2.4/libsoup/soup-websocket-connection.h
+/usr/include/libsoup-2.4/libsoup/soup-websocket-extension-deflate.h
+/usr/include/libsoup-2.4/libsoup/soup-websocket-extension-manager.h
+/usr/include/libsoup-2.4/libsoup/soup-websocket-extension.h
+/usr/include/libsoup-2.4/libsoup/soup-websocket.h
+/usr/include/libsoup-2.4/libsoup/soup-xmlrpc-old.h
+/usr/include/libsoup-2.4/libsoup/soup-xmlrpc.h
+/usr/include/libsoup-2.4/libsoup/soup.h
+/usr/include/libsoup-gnome-2.4/libsoup/soup-cookie-jar-sqlite.h
+/usr/include/libsoup-gnome-2.4/libsoup/soup-gnome-features.h
+/usr/include/libsoup-gnome-2.4/libsoup/soup-gnome.h
+/usr/lib64/libsoup-2.4.so
+/usr/lib64/libsoup-gnome-2.4.so
+/usr/lib64/pkgconfig/libsoup-2.4.pc
+/usr/lib64/pkgconfig/libsoup-gnome-2.4.pc
 
 %files lib
 %defattr(-,root,root,-)
@@ -248,6 +216,77 @@ rm -f %{buildroot}/usr/share/vala/vapi/libsoup-2.4.vapi
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/compat-libsoup-soname-24/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+
+%files tests
+%defattr(-,root,root,-)
+/usr/libexec/installed-tests/libsoup-2.4/cache-test
+/usr/libexec/installed-tests/libsoup-2.4/chunk-io-test
+/usr/libexec/installed-tests/libsoup-2.4/chunk-test
+/usr/libexec/installed-tests/libsoup-2.4/coding-test
+/usr/libexec/installed-tests/libsoup-2.4/context-test
+/usr/libexec/installed-tests/libsoup-2.4/continue-test
+/usr/libexec/installed-tests/libsoup-2.4/cookies-test
+/usr/libexec/installed-tests/libsoup-2.4/date-test
+/usr/libexec/installed-tests/libsoup-2.4/forms-test
+/usr/libexec/installed-tests/libsoup-2.4/header-parsing-test
+/usr/libexec/installed-tests/libsoup-2.4/hsts-db-test
+/usr/libexec/installed-tests/libsoup-2.4/hsts-test
+/usr/libexec/installed-tests/libsoup-2.4/index.txt
+/usr/libexec/installed-tests/libsoup-2.4/libtest-utils.so
+/usr/libexec/installed-tests/libsoup-2.4/misc-test
+/usr/libexec/installed-tests/libsoup-2.4/multipart-test
+/usr/libexec/installed-tests/libsoup-2.4/no-ssl-test
+/usr/libexec/installed-tests/libsoup-2.4/ntlm-test
+/usr/libexec/installed-tests/libsoup-2.4/ntlm-test-helper
+/usr/libexec/installed-tests/libsoup-2.4/redirect-test
+/usr/libexec/installed-tests/libsoup-2.4/requester-test
+/usr/libexec/installed-tests/libsoup-2.4/resource-test
+/usr/libexec/installed-tests/libsoup-2.4/samesite-test
+/usr/libexec/installed-tests/libsoup-2.4/server-auth-test
+/usr/libexec/installed-tests/libsoup-2.4/server-test
+/usr/libexec/installed-tests/libsoup-2.4/session-test
+/usr/libexec/installed-tests/libsoup-2.4/sniffing-test
+/usr/libexec/installed-tests/libsoup-2.4/socket-test
+/usr/libexec/installed-tests/libsoup-2.4/soup-tests.gresource
+/usr/libexec/installed-tests/libsoup-2.4/ssl-test
+/usr/libexec/installed-tests/libsoup-2.4/streaming-test
+/usr/libexec/installed-tests/libsoup-2.4/test-cert.pem
+/usr/libexec/installed-tests/libsoup-2.4/test-key.pem
+/usr/libexec/installed-tests/libsoup-2.4/timeout-test
+/usr/libexec/installed-tests/libsoup-2.4/tld-test
+/usr/libexec/installed-tests/libsoup-2.4/uri-parsing-test
+/usr/libexec/installed-tests/libsoup-2.4/websocket-test
+/usr/share/installed-tests/libsoup-2.4/cache-test.test
+/usr/share/installed-tests/libsoup-2.4/chunk-io-test.test
+/usr/share/installed-tests/libsoup-2.4/chunk-test.test
+/usr/share/installed-tests/libsoup-2.4/coding-test.test
+/usr/share/installed-tests/libsoup-2.4/context-test.test
+/usr/share/installed-tests/libsoup-2.4/continue-test.test
+/usr/share/installed-tests/libsoup-2.4/cookies-test.test
+/usr/share/installed-tests/libsoup-2.4/date-test.test
+/usr/share/installed-tests/libsoup-2.4/forms-test.test
+/usr/share/installed-tests/libsoup-2.4/header-parsing-test.test
+/usr/share/installed-tests/libsoup-2.4/hsts-db-test.test
+/usr/share/installed-tests/libsoup-2.4/hsts-test.test
+/usr/share/installed-tests/libsoup-2.4/misc-test.test
+/usr/share/installed-tests/libsoup-2.4/multipart-test.test
+/usr/share/installed-tests/libsoup-2.4/no-ssl-test.test
+/usr/share/installed-tests/libsoup-2.4/ntlm-test.test
+/usr/share/installed-tests/libsoup-2.4/redirect-test.test
+/usr/share/installed-tests/libsoup-2.4/requester-test.test
+/usr/share/installed-tests/libsoup-2.4/resource-test.test
+/usr/share/installed-tests/libsoup-2.4/samesite-test.test
+/usr/share/installed-tests/libsoup-2.4/server-auth-test.test
+/usr/share/installed-tests/libsoup-2.4/server-test.test
+/usr/share/installed-tests/libsoup-2.4/session-test.test
+/usr/share/installed-tests/libsoup-2.4/sniffing-test.test
+/usr/share/installed-tests/libsoup-2.4/socket-test.test
+/usr/share/installed-tests/libsoup-2.4/ssl-test.test
+/usr/share/installed-tests/libsoup-2.4/streaming-test.test
+/usr/share/installed-tests/libsoup-2.4/timeout-test.test
+/usr/share/installed-tests/libsoup-2.4/tld-test.test
+/usr/share/installed-tests/libsoup-2.4/uri-parsing-test.test
+/usr/share/installed-tests/libsoup-2.4/websocket-test.test
 
 %files locales -f libsoup.lang
 %defattr(-,root,root,-)
