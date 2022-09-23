@@ -4,7 +4,7 @@
 #
 Name     : compat-libsoup-soname-24
 Version  : 2.74.0
-Release  : 51
+Release  : 52
 URL      : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Source0  : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Summary  : No detailed summary available
