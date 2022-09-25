@@ -4,7 +4,7 @@
 #
 Name     : compat-libsoup-soname-24
 Version  : 2.74.0
-Release  : 52
+Release  : 53
 URL      : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Source0  : https://download.gnome.org/sources/libsoup/2.74/libsoup-2.74.0.tar.xz
 Summary  : No detailed summary available
@@ -17,7 +17,6 @@ Requires: compat-libsoup-soname-24-locales = %{version}-%{release}
 Requires: glib-networking
 BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
-BuildRequires : curl
 BuildRequires : curl-dev32
 BuildRequires : e2fsprogs-dev
 BuildRequires : e2fsprogs-dev32
@@ -106,7 +105,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1632334731
+export SOURCE_DATE_EPOCH=1664142006
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -122,7 +121,7 @@ ninja -v -C builddir
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-libsoup-soname-24
-cp %{_builddir}/libsoup-2.74.0/COPYING %{buildroot}/usr/share/package-licenses/compat-libsoup-soname-24/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/libsoup-%{version}/COPYING %{buildroot}/usr/share/package-licenses/compat-libsoup-soname-24/ba8966e2473a9969bdcab3dc82274c817cfd98a1 || :
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang libsoup
 
